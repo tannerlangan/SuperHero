@@ -22,6 +22,12 @@ public class SuperHero{
         return name;
     }
 
+    public String getSuperpower(){
+        return superpower;
+    }
+    public Double getHeight(){
+        return height;
+    }
 
     public int getCiviliansSaved(){
         return civiliansSaved;
@@ -44,8 +50,8 @@ public class SuperHero{
     public void listHeroes(ArrayList<SuperHero> heroList){
 
         for(int i = 0; i < heroList.size(); i++){
-            System.out.print("ID: " + i);
-            System.out.println(heroList.get(i));
+            System.out.print("ID: " + i + " ");
+            System.out.println("Name: " + heroList.get(i).getName() + ", Superpower: " + heroList.get(i).getSuperpower() + ", Height: " + heroList.get(i).getHeight() + ", Civlians Saved: " + heroList.get(i).getCiviliansSaved());
 
         }
 
