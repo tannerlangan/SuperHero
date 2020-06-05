@@ -2,6 +2,9 @@ package com.SuperHeroList;
 
 import java.util.ArrayList;
 
+/*Superhero class uses a constructor to hold information on superheroes, implements toString method to
+* allow for debug dump.  Methods to remove superheroes from array list*/
+
 public class SuperHero {
 
     private String name, superpower;
@@ -21,7 +24,7 @@ public class SuperHero {
 
 
     public String toString() {
-        return "superhero{Name: '" + name + "',Superpower: '" + superpower + "',Height: " + height + ",Civilians Saved: " + civiliansSaved +"}";
+        return "superhero{Name: " + name + ",Superpower: " + superpower + ",Height: " + height + ",Civilians Saved: " + civiliansSaved +"}";
     }
 
     public void removeHero(ArrayList<SuperHero> heroList, int indexToBeRemoved, String superHero) {

@@ -1,5 +1,7 @@
 package com.SuperHeroList;
 
+
+//class has to methods that will load the main menu and print the intial title
 public class Menu {
 
     static String[] options = {"List All Superheroes", "Add a New Super Hero", "Remove a superhero", "Update Number of Civilians Saved by a superhero"
