@@ -5,9 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 import java.lang.*;
 
@@ -17,30 +15,31 @@ public class Main {
     public static ArrayList<SuperHero> superheroList = new ArrayList<>();
     private static ArrayList<SuperHero> heroListClone;
 
-    public static void loadSuperHeroes(){
-        File input = new File("superhero.json");
+    public static void loadSuperHeroes() {
         try {
+            File input = new File("superhero.json");
+
             JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
             JsonObject fileObject = fileElement.getAsJsonObject();
-            JsonArray jsonArray = fileObject.get("").getAsJsonArray();
+            JsonArray jsonArray = fileObject.get("Superhero").getAsJsonArray();
 
-            for (JsonElement heroElement: jsonArray){
+            for (JsonElement heroElement : jsonArray) {
 
                 JsonObject heroJsonObject = heroElement.getAsJsonObject();
 
                 String name = heroJsonObject.get("name").getAsString();
-                String superpower = heroJsonObject.get("name").getAsString();
-                Double height = heroJsonObject.get("name").getAsDouble();
-                Integer civiliansSaved = heroJsonObject.get("name").getAsInt();
+                String superpower = heroJsonObject.get("superpower").getAsString();
+                Double height = heroJsonObject.get("height").getAsDouble();
+                Integer civiliansSaved = heroJsonObject.get("civiliansSaved").getAsInt();
 
-                SuperHero newHero  = new SuperHero(name, superpower, height, civiliansSaved);
+                SuperHero newHero = new SuperHero(name, superpower, height, civiliansSaved);
                 addSuperHero(newHero);
 
 
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("No List of Superheroes found, please add some!");
         }
     }
 
@@ -81,14 +80,15 @@ public class Main {
                 SuperHero newHero = new SuperHero(name, power, height, civSaved);
                 addSuperHero(newHero);
             } else if (choice == 3) {
+                superhero.listHeroes(superheroList);
                 System.out.println("Please Select Superhero to be removed based on their ID or select 0 to return to main menu");
                 int removeChoice = in.nextInt();
                 if (removeChoice == 0) {
                     continue;
                 }
-                SuperHero currentHero = superheroList.get(removeChoice);
+                SuperHero currentHero = superheroList.get(removeChoice - 1);
                 String heroName = currentHero.getName();
-                superhero.removeHero(superheroList, removeChoice, heroName);
+                superhero.removeHero(superheroList, removeChoice - 1, heroName);
             } else if (choice == 4) {
                 superhero.listHeroes(superheroList);
                 System.out.println("Please Select Superhero to be update based on their ID or press 0 to return to main menu");
@@ -112,8 +112,14 @@ public class Main {
             } else if (choice == 5) {
                 heroListClone = (ArrayList<SuperHero>) superheroList.clone();
                 heroListClone.sort(Comparator.comparingInt(SuperHero::getCiviliansSaved).reversed());
+                int count = 0;
 
-                if (heroListClone.size() < 3) {
+                for(int i = 0; i < heroListClone.size();i++){
+                    if(heroListClone.get(i).getCiviliansSaved() >= 1){
+                        count++;
+                    }
+                }
+                if (heroListClone.size() < 3 || count < 3) {
                     System.out.println("Need More Heroes");
                 } else {
                     for (int j = 0; j <= 2; j++) {
@@ -131,11 +137,30 @@ public class Main {
 
     }
 
+
     private static void loadHerosToJson(ArrayList<SuperHero> superheroList) {
 
-        for(int i = 0; i < superheroList.size(); i++){
-            JsonObject jsonHero = new JsonObject(42111111111);
+        try {
+            File export = new File("superhero.json");
+            if (export.createNewFile()) {
+                System.out.println("File created: " + export.getName());
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to file");
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < superheroList.size(); i++) {
+            FileWriter myWriter = null;
+            try {
+                myWriter = new FileWriter("superhero.json");
+                myWriter.append(superheroList.toString());
+                myWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
     }
+
 }
