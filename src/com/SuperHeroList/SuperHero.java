@@ -18,25 +18,7 @@ public class SuperHero {
     public SuperHero() {
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public String getSuperpower() {
-        return superpower;
-    }
-
-    public Double getHeight() {
-        return height;
-    }
-
-    public int getCiviliansSaved() {
-        return civiliansSaved;
-    }
-
-    public void setCiviliansSaved(int civiliansSaved) {
-        this.civiliansSaved = civiliansSaved;
-    }
 
     public String toString() {
         return "Name: " + name + " Superpower: " + superpower + " Height: " + height + " Civilians Saved: " + civiliansSaved;
@@ -57,6 +39,40 @@ public class SuperHero {
         }
 
     }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSuperpower() {
+        return superpower;
+    }
+
+    public void setSuperpower(String superpower) {
+        this.superpower = superpower;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public int getCiviliansSaved() {
+        return civiliansSaved;
+    }
+
+    public void setCiviliansSaved(int civiliansSaved) {
+        this.civiliansSaved = civiliansSaved;
+    }
+
 
 
 }

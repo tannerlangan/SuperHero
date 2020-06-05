@@ -1,5 +1,13 @@
 package com.SuperHeroList;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 import java.lang.*;
 
@@ -9,6 +17,32 @@ public class Main {
     public static ArrayList<SuperHero> superheroList = new ArrayList<>();
     private static ArrayList<SuperHero> heroListClone;
 
+    public static void loadSuperHeroes(){
+        File input = new File("superhero.json");
+        try {
+            JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+            JsonObject fileObject = fileElement.getAsJsonObject();
+            JsonArray jsonArray = fileObject.get("").getAsJsonArray();
+
+            for (JsonElement heroElement: jsonArray){
+
+                JsonObject heroJsonObject = heroElement.getAsJsonObject();
+
+                String name = heroJsonObject.get("name").getAsString();
+                String superpower = heroJsonObject.get("name").getAsString();
+                Double height = heroJsonObject.get("name").getAsDouble();
+                Integer civiliansSaved = heroJsonObject.get("name").getAsInt();
+
+                SuperHero newHero  = new SuperHero(name, superpower, height, civiliansSaved);
+                addSuperHero(newHero);
+
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void addSuperHero(SuperHero newHero) {
 
@@ -18,7 +52,7 @@ public class Main {
 
 
     public static void main(String[] arg) {
-
+        loadSuperHeroes();
         Scanner in = new Scanner(System.in);
         int choice;
         Menu menu = new Menu();
@@ -91,9 +125,17 @@ public class Main {
             }
 
         } while (choice != 0);
-
+        loadHerosToJson(superheroList);
         in.close();
 
 
+    }
+
+    private static void loadHerosToJson(ArrayList<SuperHero> superheroList) {
+
+        for(int i = 0; i < superheroList.size(); i++){
+            JsonObject jsonHero = new JsonObject(42111111111);
+
+        }
     }
 }
